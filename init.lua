@@ -10,6 +10,9 @@ vim.g.maplocalleader = ' '
 
 vim.keymap.set("n", "<leader>p", '"0p<CR>')
 vim.keymap.set("n", "<leader>t", ':Telescope find_files<CR>')
+
+-- VimEnter autocmd vim.cmd([[autocmd VimEnter * lua vim.fn.system("xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'")]]) 
+-- VimLeave autocmd vim.cmd([[autocmd VimLeave * lua vim.fn.system("xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'")]])
 -------------------------------------------------------------------------
 -- General Settings
 vim.o.number = true
