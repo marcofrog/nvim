@@ -3,26 +3,39 @@ local vim = vim
 -- Key Mappings
 vim.api.nvim_set_keymap('n', '`', 'i', {})
 vim.api.nvim_set_keymap('i', '`', '<ESC>', {})
--------------------------------------------------------------------------
+---------------------------------------------------------------------------
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.keymap.set("n", "<leader>p", '"0p<CR>')
+vim.keymap.set("n", "<leader>e", ':Ex<CR>')
 vim.keymap.set("n", "<leader>t", ':Telescope find_files<CR>')
-
--- VimEnter autocmd vim.cmd([[autocmd VimEnter * lua vim.fn.system("xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'")]]) 
--- VimLeave autocmd vim.cmd([[autocmd VimLeave * lua vim.fn.system("xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'")]])
+-------------------------------------------------------------
+vim.keymap.set("i", "", '<ESC>:ToggleTerm<CR>')
+vim.keymap.set("n", "", ':ToggleTerm<CR>')
+vim.keymap.set("t", "", '<C-n>:ToggleTerm<CR>')
+vim.keymap.set("t", "<C-w>", '<C-n><C-w>')
+vim.api.nvim_set_keymap('i', "<Right>", 'pumvisible() ? "\\<C-y>" : "\\<Right>"', { noremap = true, expr = true })
+vim.keymap.set("v", "<S-Down>", "<Nop>")
+vim.keymap.set("v", "<S-Up>", "<Nop>")
+vim.keymap.set("i", "<S-Left>", "<Home>")
+vim.keymap.set("i", "<S-Right>", "<End>")
+vim.keymap.set("n", "<S-Left>", "<Home>")
+vim.keymap.set("n", "<S-Right>", "<End>")
 -------------------------------------------------------------------------
--- General Settings
+vim.o.cursorline = true
 vim.o.number = true
-
 -- Colorscheme
 vim.cmd('colorscheme gruvbox')
+vim.cmd('set spell')
 
 -- Terminal Configuration
-vim.o.t_SI = '\27[5 q' -- cursors
-vim.o.t_EI = '\27[1 q'
+-- vim.o.t_SI = '\27[5 q' -- cursors
+-- vim.o.t_EI = '\27[2 q'
+-- vim.api.nvim_set_option('t_EI', '\27[4 q')
+-- vim.api.nvim_set_option('t_SI', '\27[4 q')
+vim.o.guicursor = "n:block-blinkon10-blinkoff10,i:ver100-blinkon10-blinkoff10"
 
 -- Mouse
 vim.o.mouse = 'a'
@@ -66,6 +79,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+		--///////////////////////
+		-- 'vim-scripts/AutoComplPop',
+		--///////////////////////
 		'tpope/vim-surround',
 		'preservim/nerdtree',
 		'tpope/vim-commentary',
@@ -75,7 +91,9 @@ require('lazy').setup({
     		'nvim-telescope/telescope.nvim', tag = '0.1.2',
       		dependencies = { 'nvim-lua/plenary.nvim' }
     		},
-
+		{
+		{'akinsho/toggleterm.nvim', version = "*", config = true}
+		},
 		{
 		-- LSP Configuration & Plugins
 		'neovim/nvim-lspconfig',
@@ -87,12 +105,14 @@ require('lazy').setup({
 		'folke/neodev.nvim',
 		},
 		},
-	
 		{
 		-- Autocompletion
 		'hrsh7th/nvim-cmp',
-		dependencies = {
+		'hrsh7th/cmp-path',
+		'hrsh7th/cmp-nvim-lsp',
+		'saadparwaiz1/cmp_luasnip',
 		'L3MON4D3/LuaSnip',
+		dependencies = {
 		'saadparwaiz1/cmp_luasnip',
 		'hrsh7th/cmp-nvim-lsp',
 		'rafamadriz/friendly-snippets',
@@ -100,6 +120,9 @@ require('lazy').setup({
 		}
 		}
 		)
+
+
+
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -192,7 +215,7 @@ mason_lspconfig.setup_handlers {
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+local luasnip = require('luasnip')
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
@@ -232,6 +255,7 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
+    { name = 'path'},
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
