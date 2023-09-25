@@ -11,9 +11,6 @@ vim.g.maplocalleader = ' '
 vim.keymap.set("n", "<leader>p", '"0p<CR>')
 vim.keymap.set("n", "<leader>e", ':Ex<CR>')
 vim.keymap.set("n", "<leader>t", ':Telescope find_files<CR>')
-vim.keymap.set("n", "<leader>T", ':Telescope live_grep<CR>')
-vim.keymap.set("n", "<leader>o", ':NERDTreeFromBookmark ')
-vim.keymap.set("v", "<leader>y", '"+y')
 -------------------------------------------------------------
 vim.keymap.set("i", "", '<ESC>:ToggleTerm<CR>')
 vim.keymap.set("n", "", ':ToggleTerm<CR>')
@@ -27,13 +24,6 @@ vim.keymap.set("i", "<S-Right>", "<End>")
 vim.keymap.set("n", "<S-Left>", "<Home>")
 vim.keymap.set("n", "<S-Right>", "<End>")
 vim.keymap.set("n", "\\", "<C-w>w")
--- Resize splits horizontally
-vim.api.nvim_set_keymap('n', '<C-j>', ':vertical resize -5<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', ':vertical resize +5<CR>', { noremap = true, silent = true })
-
--- Resize splits vertically
-vim.api.nvim_set_keymap('n', '<C-h>', ':resize -5<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', ':resize +5<CR>', { noremap = true, silent = true })
 -------------------------------------------------------------------------
 vim.o.cursorline = true
 vim.o.number = true
@@ -41,14 +31,14 @@ vim.o.number = true
 vim.cmd('colorscheme gruvbox')
 vim.cmd('set spell')
 -- Terminal Configuration
-vim.o.t_SI = '\27[5 q' -- cursors
-vim.o.t_EI = '\27[2 q'
+-- vim.o.t_SI = '\27[5 q' -- cursors
+-- vim.o.t_EI = '\27[2 q'
 -- vim.api.nvim_set_option('t_EI', '\27[4 q')
 -- vim.api.nvim_set_option('t_SI', '\27[4 q')
--- vim.o.guicursor = "n:block-blinkon100-blinkoff100,i:ver100-blinkon100-blinkoff100"
+vim.o.guicursor = "n:block-blinkon10-blinkoff10,i:ver100-blinkon10-blinkoff10"
 
 -- Mouse
-vim.o.mouse = 'a'
+vim.o.mouse = ''
 
 -- Custom Mappings
 vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', {})
@@ -74,6 +64,8 @@ vim.g.airline_right_alt_sep = ''
 --vim.cmd('Plug \'https://github.com/prabirshrestha/vim-lsp\'')
 --vim.cmd('call plug#end()')
 
+vim.g.OmniSharp_server_use_mono = 1
+vim.g.OmniSharp_server_use_net7 = 1
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -92,13 +84,8 @@ require('lazy').setup({
 		--///////////////////////
 		-- 'vim-scripts/AutoComplPop',
 		--///////////////////////
-		--===========================
-		'prabirshrestha/asyncomplete.vim',
-		'SirVer/ultisnips',
-		'honza/vim-snippets',
 		'OmniSharp/omnisharp-vim',
-		'nickspoons/vim-sharpenup',
-		--===========================
+		-- 'nickspoons/vim-sharpenup',
 		'Issafalcon/lsp-overloads.nvim',
 		'tpope/vim-surround',
 		'preservim/nerdtree',
@@ -107,7 +94,7 @@ require('lazy').setup({
 		'ryanoasis/vim-devicons',
 		{
     		'nvim-telescope/telescope.nvim', tag = '0.1.2',
-      		dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' }
+      		dependencies = { 'nvim-lua/plenary.nvim' }
     		},
 		{
 		{'akinsho/toggleterm.nvim', version = "*", config = true}
@@ -138,21 +125,8 @@ require('lazy').setup({
 		}
 		}
 		)
--- vim.g.OmniSharp_server_path = '/Users/gleb/Downloads/dotnet-sdk-6.0.414-osx-arm64/sdk/6'
-vim.g.OmniSharp_server_use_mono = 0
-vim.g.OmniSharp_server_use_net6 = 0
---  Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
---  - https://github.com/Valloric/YouCompleteMe
---  - https://github.com/nvim-lua/completion-nvim
-vim.g.UltiSnipsExpandTrigger = '<tab>'
-vim.g.UltiSnipsJumpForwardTrigger = '<c-b>'
-vim.g.UltiSnipsJumpBackwardTrigger = '<c-z>'
 
--- " If you want :UltiSnipsEdit to split your window.
-vim.g.UltiSnipsEditSplit = 'vertical'
-
---////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
+-- vim.g.OmniSharp_server_use_net6 = 1
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -205,6 +179,10 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
+omnisharp = {
+
+	MsBuildPath = './Downloads/nvim-macos/share/nvim/runtime/compiler/msbuild.vim';
+},
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
@@ -291,3 +269,28 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+require'lspconfig'.omnisharp.setup {
+     -- cmd = { "dotnet", ".local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll" },
+     -- Enables support for reading code style, naming convention and analyzer
+     -- settings from .editorconfig.
+     enable_editorconfig_support = true,
+     -- If true, MSBuild project system will only load projects for files that
+     -- were opened in the editor. This setting is useful for big C# codebases
+     -- and allows for faster initialization of code navigation features only
+     -- for projects that are relevant to code that is being edited. With this
+     -- setting enabled OmniSharp may load fewer projects and may thus display
+     -- incomplete reference lists for symbols.
+     enable_ms_build_load_projects_on_demand = false,
+     -- Enables support for roslyn analyzers, code fixes and rulesets.
+     enable_roslyn_analyzers = false,
+     -- Specifies whether 'using' directives should be grouped and sorted durin
+     -- document formatting.
+     organize_imports_on_format = false,
+     -- Enables support for showing unimported types and unimported extension
+     -- methods in completion lists. When committed, the appropriate using
+     -- directive will be added at the top of the current file. This option can
+     -- have a negative impact on initial completion responsiveness,
+     -- particularly for the first few completion sessions after opening a
+     -- solution.
+     enable_import_completion = false
+     }
