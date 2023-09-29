@@ -10,8 +10,8 @@ vim.g.maplocalleader = ' '
 
 vim.keymap.set("n", "<leader>p", '"0p<CR>')
 vim.keymap.set("n", "<leader>e", ':Ex<CR>')
-vim.keymap.set("n", "<leader>t", ':Telescope find_files<CR>')
-vim.keymap.set("n", "<leader>T", ':Telescope live_grep<CR>')
+vim.keymap.set("n", "<leader>T", ':Telescope find_files<CR>')
+vim.keymap.set("n", "<leader>t", ':Telescope live_grep<CR>')
 vim.keymap.set("n", "<leader>o", ':NERDTreeFromBookmark ')
 vim.keymap.set("v", "<leader>y", '"+y')
 -------------------------------------------------------------
