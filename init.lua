@@ -27,6 +27,9 @@ vim.keymap.set("i", "<S-Right>", "<End>")
 vim.keymap.set("n", "<S-Left>", "<Home>")
 vim.keymap.set("n", "<S-Right>", "<End>")
 vim.keymap.set("n", "\\", "<C-w>w")
+-- **MAC*888888888888888888888888888888888*
+vim.o.encoding = "utf-8"
+-- ****************************************
 -- Resize splits horizontally
 vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize -5<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', ':vertical resize +5<CR>', { noremap = true, silent = true })
