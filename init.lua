@@ -28,12 +28,12 @@ vim.keymap.set("n", "<S-Left>", "<Home>")
 vim.keymap.set("n", "<S-Right>", "<End>")
 vim.keymap.set("n", "\\", "<C-w>w")
 -- Resize splits horizontally
-vim.api.nvim_set_keymap('n', '<C-j>', ':vertical resize -5<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', ':vertical resize +5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-h>', ':vertical resize +5<CR>', { noremap = true, silent = true })
 
 -- Resize splits vertically
-vim.api.nvim_set_keymap('n', '<C-h>', ':resize -5<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', ':resize +5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', ':resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':resize +5<CR>', { noremap = true, silent = true })
 -------------------------------------------------------------------------
 vim.o.cursorline = true
 vim.o.number = true
