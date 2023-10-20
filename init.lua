@@ -1,4 +1,5 @@
 local vim = vim
+local g = vim.g
 
 -- Key Mappings
 vim.api.nvim_set_keymap('n', '`', 'i', {})
@@ -16,6 +17,7 @@ vim.keymap.set("n", "<leader>o", ':NERDTreeFromBookmark ')
 vim.keymap.set("v", "<leader>y", '"+y')
 -------------------------------------------------------------
 vim.keymap.set("i", "", '<ESC>:ToggleTerm<CR>')
+vim.keymap.set("i", "<C-BS>", '')
 vim.keymap.set("n", "", ':ToggleTerm<CR>')
 vim.keymap.set("t", "", '<C-n>:ToggleTerm<CR>')
 vim.keymap.set("t", "<C-w>", '<C-n><C-w>')
@@ -52,6 +54,20 @@ vim.o.t_EI = '\27[2 q'
 
 -- Mouse
 vim.o.mouse = 'a'
+
+-- tabs
+vim.keymap.set("n", "<leader>1", "1gt")
+vim.keymap.set("n", "<leader>2", "2gt")
+vim.keymap.set("n", "<leader>3", "3gt")
+vim.keymap.set("n", "<leader>4", "4gt")
+vim.keymap.set("n", "<leader>5", "5gt")
+vim.keymap.set("n", "<leader>6", "6gt")
+vim.keymap.set("n", "<leader>7", "7gt")
+vim.keymap.set("n", "<leader>8", "8gt")
+vim.keymap.set("n", "<leader>9", "9gt")
+
+vim.keymap.set("n", "<A-Tab>", ":tablast<cr>")
+vim.keymap.set("i", "<A-Tab>", ":tablast<cr>")
 
 -- Custom Mappings
 vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', {})
@@ -96,11 +112,12 @@ require('lazy').setup({
 		-- 'vim-scripts/AutoComplPop',
 		--///////////////////////
 		--===========================
-		'prabirshrestha/asyncomplete.vim',
-		'SirVer/ultisnips',
-		'honza/vim-snippets',
-		'OmniSharp/omnisharp-vim',
-		'nickspoons/vim-sharpenup',
+		 'prabirshrestha/asyncomplete.vim',
+		 'SirVer/ultisnips',
+		 'honza/vim-snippets',
+		 'OmniSharp/omnisharp-vim',
+		 -- 'nickspoons/vim-sharpenup',
+		 'dense-analysis/ale',
 		--===========================
 		'Issafalcon/lsp-overloads.nvim',
 		'tpope/vim-surround',
@@ -108,6 +125,7 @@ require('lazy').setup({
 		'tpope/vim-commentary',
 		'vim-airline/vim-airline',
 		'ryanoasis/vim-devicons',
+		-- 'lervag/vimtex',
 		{
     		'nvim-telescope/telescope.nvim', tag = '0.1.2',
       		dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' }
@@ -141,9 +159,34 @@ require('lazy').setup({
 		}
 		}
 		)
+--ZATHURA +++=+=+==============================
+-- vim.g.tex_flavor = 'latex'
+-- vim.g.vimtex_view_method = 'zathura'
+-- vim.g.vimtex_quickfix_mode = 0
+-- vim.opt.conceallevel = 1
+-- vim.g.tex_conceal = 'abdmg'
+
+-- -- Default compiling format
+-- vim.g.Tex_DefaultTargetFormat = 'pdf'
+
+-- -- Set the default viewer
+-- vim.g.Tex_ViewRule_pdf = 'zathura'
+
+-- -- Define the Synctex function
+-- function Synctex()
+--   -- remove 'silent' for debugging
+--   vim.fn.system('zathura --synctex-forward ' .. vim.fn.line('.') .. ':' .. vim.fn.col('.') .. ':' .. vim.fn.bufname('%') .. ' ' .. vim.g.syncpdf)
+-- end
+
+-- -- Map Ctrl+Enter to call the Synctex function
+-- vim.api.nvim_set_keymap('n', '<C-Enter>', ':lua Synctex()<CR>', { noremap = true, silent = true })
+--------++++++++++++===========================
+
 -- vim.g.OmniSharp_server_path = '/Users/gleb/Downloads/dotnet-sdk-6.0.414-osx-arm64/sdk/6'
-vim.g.OmniSharp_server_use_mono = 0
-vim.g.OmniSharp_server_use_net6 = 0
+g.OmniSharp_server_stdio = 0
+g.OmniSharp_server_use_mono = 1
+g.OmniSharp_server_use_net6 = 1
+-- vim.g.OmniSharp_server_path = '/Users/gleb/Downloads/omnisharp-osx-arm64-net6.0/OmniSharp'
 --  Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
 --  - https://github.com/Valloric/YouCompleteMe
 --  - https://github.com/nvim-lua/completion-nvim
@@ -294,3 +337,5 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+
