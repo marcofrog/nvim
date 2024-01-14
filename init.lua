@@ -12,7 +12,8 @@ vim.g.maplocalleader = ' '
 vim.keymap.set("n", "<leader>p", '"0p<CR>')
 vim.keymap.set("n", "<leader>e", ':Ex<CR>')
 vim.keymap.set("n", "<leader>T", ':Telescope find_files<CR>')
-vim.keymap.set("n", "<leader>t", ':Telescope live_grep<CR>')
+vim.keymap.set("n", "<leader>s", ':Telescope live_grep<CR>')
+vim.keymap.set("n", "<leader>t", ':tabedit<CR>')
 vim.keymap.set("n", "<leader>o", ':NERDTreeFromBookmark ')
 vim.keymap.set("v", "<leader>y", '"+y')
 -------------------------------------------------------------
@@ -45,13 +46,16 @@ vim.o.number = true
 -- Colorscheme
 vim.cmd('colorscheme gruvbox')
 vim.cmd('set spell')
+vim.cmd('set nowrap')
 -- Terminal Configuration
 vim.o.t_SI = '\27[5 q' -- cursors
 vim.o.t_EI = '\27[2 q'
 -- vim.api.nvim_set_option('t_EI', '\27[4 q')
 -- vim.api.nvim_set_option('t_SI', '\27[4 q')
 -- vim.o.guicursor = "n:block-blinkon100-blinkoff100,i:ver100-blinkon100-blinkoff100"
-
+-------------------------------------------------------------------------
+-- SUPERTAB
+g.SuperTabDefaultCompletionType = '<c-n>'
 -- Mouse
 vim.o.mouse = 'a'
 
@@ -75,10 +79,27 @@ vim.api.nvim_set_keymap('i', '<C-s>', '<ESC>:w<CR>', {})
 vim.api.nvim_set_keymap('n', '<A-BS>', ':NERDTreeToggle<CR>', {})
 
 -- Airline Configuration
-vim.g.airline_left_sep = ''
-vim.g.airline_left_alt_sep = ''
-vim.g.airline_right_sep = ''
-vim.g.airline_right_alt_sep = ''
+vim.g.airline_left_sep = ''
+vim.g.airline_left_alt_sep = ''
+vim.g.airline_right_sep = ''
+vim.g.airline_right_alt_sep = ''
+-- enable powerline fonts
+vim.g.airline_left_sep = ''
+vim.g.airline_right_sep = ''
+--Switch to your current theme
+vim.g.airline_theme = 'g'
+vim.g.airline_extensions_whitespace_enabled = 0
+--Always show tabs
+vim.cmd('set showtabline=1')
+vim.cmd('let g:airline#extensions#tabline#enabled = 1')
+vim.cmd('let g:airline#extensions#tabline#tab_min_count = 2')
+vim.cmd('let g:airline#extensions#tabline#left_sep = "" ')
+vim.cmd('let g:airline#extensions#tabline#left_alt_sep = "" ')
+vim.cmd('let g:airline#extensions#tabline#right_sep = "" ')
+vim.cmd('let g:airline#extensions#tabline#right_alt_sep = "" ')
+--We don't need to see things like - - INSERT - - anymore
+vim.cmd('set noshowmode')
+vim.cmd('let g:airline#extensions#whitespace#enabled = 0')
 
 -- Plugin: vim-surround
 --vim.cmd('call plug#begin(\'~/.vim/plugged\')')
@@ -112,6 +133,7 @@ require('lazy').setup({
 		-- 'vim-scripts/AutoComplPop',
 		--///////////////////////
 		--===========================
+		'ervandew/supertab',
 		 'prabirshrestha/asyncomplete.vim',
 		 'SirVer/ultisnips',
 		 'honza/vim-snippets',
@@ -124,6 +146,7 @@ require('lazy').setup({
 		'preservim/nerdtree',
 		'tpope/vim-commentary',
 		'vim-airline/vim-airline',
+		'vim-airline/vim-airline-themes',
 		'ryanoasis/vim-devicons',
 		-- 'lervag/vimtex',
 		{
@@ -181,7 +204,9 @@ require('lazy').setup({
 -- -- Map Ctrl+Enter to call the Synctex function
 -- vim.api.nvim_set_keymap('n', '<C-Enter>', ':lua Synctex()<CR>', { noremap = true, silent = true })
 --------++++++++++++===========================
-
+g.ale_linters = {
+    cs = {'OmniSharp'}
+}
 -- vim.g.OmniSharp_server_path = '/Users/gleb/Downloads/dotnet-sdk-6.0.414-osx-arm64/sdk/6'
 g.OmniSharp_server_stdio = 0
 g.OmniSharp_server_use_mono = 1
