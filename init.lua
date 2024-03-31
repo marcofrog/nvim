@@ -1,17 +1,28 @@
+--[[ 
+_____       __________ ______              
+___(_)_________(_)_  /____  /___  _______ _
+__  /__  __ \_  /_  __/__  /_  / / /  __ `/
+_  / _  / / /  / / /____  / / /_/ // /_/ / 
+/_/  /_/ /_//_/  \__/(_)_/  \__,_/ \__,_/  
+   ]]
 local vim = vim
 local g = vim.g
 
+vim.cmd('source ~/.config/nvim/keybinds.vim | source ~/.config/nvim/plug.vim');
 -- Key Mappings
-vim.api.nvim_set_keymap('n', '`', 'i', {})
-vim.api.nvim_set_keymap('i', '`', '<ESC>', {})
+vim.api.nvim_set_keymap('n', '<ESC>', ':startinsert<CR>', { silent = true })
+--vim.api.nvim_set_keymap('i', '`', '<ESC>', {silent = true})
+--vim.api.nvim_set_keymap('v', '`', '<ESC>', {silent = true})
 ---------------------------------------------------------------------------
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set("n", "<leader>p", '"0p<CR>')
+vim.keymap.set("n", "P", '""p<CR>')
+vim.keymap.set("n", "p", '"0p<CR>', { noremap = true })
+vim.keymap.set("v", "p", '"0p<CR>')
 vim.keymap.set("n", "<leader>e", ':Ex<CR>')
-vim.keymap.set("n", "<leader>T", ':Telescope find_files<CR>')
+vim.keymap.set("n", "<leader>F", ':Telescope find_files<CR>')
 vim.keymap.set("n", "<leader>s", ':Telescope live_grep<CR>')
 vim.keymap.set("n", "<leader>t", ':tabedit<CR>')
 vim.keymap.set("n", "<leader>o", ':NERDTreeFromBookmark ')
@@ -23,15 +34,33 @@ vim.keymap.set("n", "", ':ToggleTerm<CR>')
 vim.keymap.set("t", "", '<C-n>:ToggleTerm<CR>')
 vim.keymap.set("t", "<C-w>", '<C-n><C-w>')
 vim.api.nvim_set_keymap('i', "<Right>", 'pumvisible() ? "\\<C-y>" : "\\<Right>"', { noremap = true, expr = true })
-vim.keymap.set("v", "<S-Down>", "<Nop>")
-vim.keymap.set("v", "<S-Up>", "<Nop>")
+vim.keymap.set("v", "<S-Down>", "10<Down>")
+vim.keymap.set("v", "<S-Up>", "10<Up>")
 vim.keymap.set("i", "<S-Left>", "<Home>")
 vim.keymap.set("i", "<S-Right>", "<End>")
 vim.keymap.set("n", "<S-Left>", "<Home>")
 vim.keymap.set("n", "<S-Right>", "<End>")
+
+vim.keymap.set("n", "<S-Up>", "10<Up>",{silent = true})
+vim.keymap.set("n", "<S-Down>", "10<Down>",{silent = true})
+
+vim.keymap.set("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+vim.keymap.set("n", "<Down>", ' v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+
+vim.keymap.set("n", "<A-Up>", ':m -2<CR>', {silent = true})
+vim.keymap.set("n", "<A-Down>", ':m +1<CR>', {silent = true})
+
+-- vim.keymap.set("v", "<A-Up>", ':m -2<CR>gv', {silent = true})
+-- vim.keymap.set("v", "<A-Down>", ':m +2<CR>gv', {silent = true})
+
+vim.keymap.set("v", "<A-Up>", ":m'<-2<CR>gv=`>my`<mzgv`yo`z" , {silent = true})
+vim.keymap.set("v", "<A-Down>", ":m'>+<CR>gv=`<my`>mzgv`yo`z", {silent = true})
+
 vim.keymap.set("n", "\\", "<C-w>w")
 -- **MAC*888888888888888888888888888888888*
 vim.o.encoding = "utf-8"
+vim.keymap.set("i", "{<Enter>", '{<Enter>}<Esc><S-o>')
+vim.keymap.set("i", "<C-p>", '<C-n>')
 -- ****************************************
 -- Resize splits horizontally
 vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize -5<CR>', { noremap = true, silent = true })
@@ -44,9 +73,10 @@ vim.api.nvim_set_keymap('n', '<C-j>', ':resize +5<CR>', { noremap = true, silent
 vim.o.cursorline = true
 vim.o.number = true
 -- Colorscheme
-vim.cmd('colorscheme gruvbox')
+--vim.cmd('colorscheme gruvbox')
 vim.cmd('set spell')
-vim.cmd('set nowrap')
+vim.cmd('set ignorecase')
+--vim.cmd('set nowrap')
 -- Terminal Configuration
 vim.o.t_SI = '\27[5 q' -- cursors
 vim.o.t_EI = '\27[2 q'
@@ -70,8 +100,8 @@ vim.keymap.set("n", "<leader>7", "7gt")
 vim.keymap.set("n", "<leader>8", "8gt")
 vim.keymap.set("n", "<leader>9", "9gt")
 
-vim.keymap.set("n", "<A-Tab>", ":tablast<cr>")
-vim.keymap.set("i", "<A-Tab>", ":tablast<cr>")
+vim.keymap.set("n", "<Tab>", ":tabnext<cr>")
+vim.keymap.set("n", "<S-Tab>", ":tabNext<cr>")
 
 -- Custom Mappings
 vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', {})
@@ -87,11 +117,13 @@ vim.g.airline_right_alt_sep = ''
 vim.g.airline_left_sep = ''
 vim.g.airline_right_sep = ''
 --Switch to your current theme
-vim.g.airline_theme = 'g'
+--vim.g.airline_theme = 'g'
 vim.g.airline_extensions_whitespace_enabled = 0
 --Always show tabs
 vim.cmd('set showtabline=1')
 vim.cmd('let g:airline#extensions#tabline#enabled = 1')
+vim.cmd('let g:airline#extensions#tabline#show_buffers = 0')
+vim.cmd('let g:airline#extensions#tabline#show_tabs = 1')
 vim.cmd('let g:airline#extensions#tabline#tab_min_count = 2')
 vim.cmd('let g:airline#extensions#tabline#left_sep = "" ')
 vim.cmd('let g:airline#extensions#tabline#left_alt_sep = "" ')
@@ -133,6 +165,28 @@ require('lazy').setup({
 		-- 'vim-scripts/AutoComplPop',
 		--///////////////////////
 		--===========================
+		--theme
+		'folke/tokyonight.nvim',
+		--
+		'ap/vim-css-color',
+		'Jorengarenar/COBOl.vim',
+		'ptzz/lf.vim',
+		'voldikss/vim-floaterm',
+		------------------------------
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = "cd app && yarn install",
+		init = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+		------------------------------
+		{
+			"lukas-reineke/headlines.nvim",
+			dependencies = "nvim-treesitter/nvim-treesitter",
+			config = true, -- or `opts = {}`
+		},
+		'vimwiki/vimwiki',
 		'ervandew/supertab',
 		 'prabirshrestha/asyncomplete.vim',
 		 'SirVer/ultisnips',
@@ -146,7 +200,7 @@ require('lazy').setup({
 		'preservim/nerdtree',
 		'tpope/vim-commentary',
 		'vim-airline/vim-airline',
-		'vim-airline/vim-airline-themes',
+		--'vim-airline/vim-airline-themes',
 		'ryanoasis/vim-devicons',
 		-- 'lervag/vimtex',
 		{
@@ -182,6 +236,10 @@ require('lazy').setup({
 		}
 		}
 		)
+vim.g.vimwiki_list = {
+  { path = '~/Documents/vimwiki/', syntax = 'markdown', ext = 'md' }
+}
+
 --ZATHURA +++=+=+==============================
 -- vim.g.tex_flavor = 'latex'
 -- vim.g.vimtex_view_method = 'zathura'
@@ -204,6 +262,7 @@ require('lazy').setup({
 -- -- Map Ctrl+Enter to call the Synctex function
 -- vim.api.nvim_set_keymap('n', '<C-Enter>', ':lua Synctex()<CR>', { noremap = true, silent = true })
 --------++++++++++++===========================
+--
 g.ale_linters = {
     cs = {'OmniSharp'}
 }
@@ -252,6 +311,10 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
+  require('telescope').setup{
+    defaults = {
+      layout_strategy = 'horizontal',
+      },}
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
@@ -363,4 +426,21 @@ cmp.setup {
   },
 }
 
+
+-- 88P'888'Y88 888 888 888'Y88     e   e     888'Y88 
+-- P'  888  'Y 888 888 888 ,'Y    d8b d8b    888 ,'Y 
+--     888     8888888 888C8     e Y8b Y8b   888C8   
+--     888     888 888 888 ",d  d8b Y8b Y8b  888 ",d 
+--     888     888 888 888,d88 d888b Y8b Y8b 888,d88 
+--
+vim.cmd('colorscheme tokyonight-night')
+
+
+
+    -- e   e     888 88P     888'Y88 888 888     888'Y88 
+   -- d8b d8b    888 8P      888 ,'Y 888 888     888 ,'Y 
+  -- e Y8b Y8b   888 K       888C8   888 888     888C8   
+ -- d8b Y8b Y8b  888 8b      888 "   888 888  ,d 888 ",d 
+-- d888b Y8b Y8b 888 88b     888     888 888,d88 888,d88 
+    --                   888                                                                                   
 
