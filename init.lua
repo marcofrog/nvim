@@ -22,7 +22,7 @@ vim.keymap.set("n", "P", '""p<CR>')
 vim.keymap.set("n", "p", '"0p<CR>', { noremap = true })
 vim.keymap.set("v", "p", '"0p<CR>')
 vim.keymap.set("n", "<leader>e", ':Ex<CR>')
-vim.keymap.set("n", "<leader>F", ':Telescope find_files<CR>')
+vim.keymap.set("n", "<leader>F", ':Telescope find_files hidden=true<CR>')
 vim.keymap.set("n", "<leader>s", ':Telescope live_grep<CR>')
 vim.keymap.set("n", "<leader>t", ':tabedit<CR>')
 vim.keymap.set("n", "<leader>o", ':NERDTreeFromBookmark ')
@@ -443,4 +443,15 @@ vim.cmd('colorscheme tokyonight-night')
  -- d8b Y8b Y8b  888 8b      888 "   888 888  ,d 888 ",d 
 -- d888b Y8b Y8b 888 88b     888     888 888,d88 888,d88 
     --                   888                                                                                   
-
+require('telescope').setup({
+  defaults = {
+	  layout_strategy = "vertical",
+	  layout_config = {
+		  width=0.90,
+		  -- preview_height=0.65,
+		  preview_width=0.65,
+		  height=0.99,
+		  prompt_position="top"
+	  },
+	  sorting_strategy="ascending"}
+  })
