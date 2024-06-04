@@ -9,6 +9,7 @@ local vim = vim
 local g = vim.g
 
 vim.cmd('source ~/.config/nvim/keybinds.vim | source ~/.config/nvim/plug.vim');
+vim.g.python3_host_prog = '/opt/homebrew/bin/python3'
 -- Key Mappings
 vim.api.nvim_set_keymap('n', '<ESC>', ':startinsert<CR>', { silent = true })
 --vim.api.nvim_set_keymap('i', '`', '<ESC>', {silent = true})
@@ -17,6 +18,7 @@ vim.api.nvim_set_keymap('n', '<ESC>', ':startinsert<CR>', { silent = true })
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.cmd('let g:netrw_keepdir = 0')
 
 vim.keymap.set("n", "P", '""p<CR>')
 vim.keymap.set("n", "p", '"0p<CR>', { noremap = true })
